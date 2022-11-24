@@ -3,9 +3,11 @@ import { AuthService } from './auth.service';
 import { AuthDto } from './dto';
 import { Serialize } from '../interceptors/serialize.interceptor';
 import { AuthResponseDto } from '../auth/dto/auth.response.dto';
+import { HandleDatabaseError } from 'src/interceptors/prisma.interceptor';
 
 @Controller('auth')
 @Serialize(AuthResponseDto)
+@HandleDatabaseError()
 export class AuthController {
   constructor(private authService: AuthService) {}
 

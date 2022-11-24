@@ -24,6 +24,8 @@
 
 ## Description
 
+A Bookmark API with MultiTenacy capabilities and user Authentication
+
 [Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
 
 ## Installation
@@ -35,28 +37,38 @@ $ npm install
 ## Running the app
 
 ```bash
-# development
-$ npm run start
+- Create a `.env` file at the root of the project and add the details of the `.env.example` files with the right credentials
+
+- Make sure `docker` is available
+
+- To run migration on the `default` schema specified by the user in the `.env` file of the database run `npm run db:dev:restart`
+
+- To run migration on the another schema, make sure you add the database url as an environmental variable from the command line. The schema of this database url must coincide with the user `tenant id` supplied from the request headers as `x-tenant-id`
 
 # watch mode
 $ npm run start:dev
 
-# production mode
-$ npm run start:prod
 ```
 
-## Test
+## Endpoints
 
-```bash
-# unit tests
-$ npm run test
+POST /auth/register
 
-# e2e tests
-$ npm run test:e2e
+POST /auth/signin
 
-# test coverage
-$ npm run test:cov
-```
+GET /users/me
+
+PATCH /users
+
+POST /bookmarks
+
+GET /bookmarks
+
+GET /bookmarks/:id
+
+PATCH /bookmarks/:id
+
+DELETE /bookmarks/:id
 
 ## Support
 

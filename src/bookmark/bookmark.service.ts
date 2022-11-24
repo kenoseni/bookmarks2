@@ -1,10 +1,10 @@
 import { ForbiddenException, Injectable } from '@nestjs/common';
-import { PrismaService } from 'src/prisma/prisma.service';
+import { PrismaClient } from '@prisma/client';
 import { CreateBookmarkDto, ModifyBookmarkDto } from './dto';
 
 @Injectable()
 export class BookmarkService {
-  constructor(private prisma: PrismaService) {}
+  constructor(private prisma: PrismaClient) {}
   async createBookMark(userId: number, dto: CreateBookmarkDto) {
     const bookmark = await this.prisma.bookmark.create({
       data: {

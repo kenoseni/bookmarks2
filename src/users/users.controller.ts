@@ -5,19 +5,17 @@ import {
   HttpCode,
   HttpStatus,
   Patch,
-  UseGuards,
 } from '@nestjs/common';
 import { User } from '@prisma/client';
 import { AuthResponseDto } from 'src/auth/dto/auth.response.dto';
+import { HandleDatabaseError } from 'src/interceptors/prisma.interceptor';
 import { Serialize } from 'src/interceptors/serialize.interceptor';
-import { JwtGuard } from '../auth/guard';
 import { GetUser } from './decorator';
 import { ModifyUserDto } from './dto';
 import { UsersService } from './users.service';
-
-@UseGuards(JwtGuard)
 @Controller('users')
 @Serialize(AuthResponseDto)
+@HandleDatabaseError()
 export class UsersController {
   constructor(private userService: UsersService) {}
   @HttpCode(HttpStatus.OK)

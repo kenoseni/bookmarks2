@@ -9,16 +9,15 @@ import {
   ParseIntPipe,
   Patch,
   Post,
-  UseGuards,
 } from '@nestjs/common';
 import { AuthResponseDto } from 'src/auth/dto/auth.response.dto';
+import { HandleDatabaseError } from 'src/interceptors/prisma.interceptor';
 import { GetUser } from 'src/users/decorator';
-import { JwtGuard } from '../auth/guard';
 import { BookmarkService } from './bookmark.service';
 import { CreateBookmarkDto, ModifyBookmarkDto } from './dto';
 
-@UseGuards(JwtGuard)
 @Controller('bookmarks')
+@HandleDatabaseError()
 export class BookmarkController {
   constructor(private bookmarkService: BookmarkService) {}
   @Post()
