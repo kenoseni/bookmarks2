@@ -34,6 +34,18 @@ A Bookmark API with MultiTenacy capabilities and user Authentication
 $ npm install
 ```
 
+## Database commands
+
+```
+npx prisma init: Initialize prisma
+
+npx prisma --help: Get help
+
+npx prisma migrate dev: Generate and deploy migration files to database
+
+npx prisma studio: Spin up Prisma Studio on browser
+```
+
 ## Running the app
 
 ```bash
@@ -69,6 +81,11 @@ GET /bookmarks/:id
 PATCH /bookmarks/:id
 
 DELETE /bookmarks/:id
+
+## Note
+
+- AuthGuard functionality was only used to build the initial application. It's implementation was not robost enough to serve as authentication guard
+- Prisma Service was also used to build the initial application, I add to switch to a per-request prisma service to handle multi-tenancy
 
 ## Support
 
