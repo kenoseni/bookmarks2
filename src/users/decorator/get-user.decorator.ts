@@ -1,6 +1,7 @@
 import {
   createParamDecorator,
   ExecutionContext,
+  NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
@@ -33,13 +34,20 @@ const verifyToken = async (req: Request) => {
   if (bearer !== 'Bearer') {
     throw new UnauthorizedException('Invalid user token');
   }
+
   const userDetails: {
     sub: number;
     email: string;
     userId: number;
     iat: number;
     exp: number;
-  } = await jwt.verifyAsync(token, { secret });
+  } = await jwt.verifyAsync(token, { secret }).catch((error) => {
+    throw new NotFoundException('User not found');
+  });
+
+  if (!userDetails) {
+    throw new NotFoundException('User not found');
+  }
 
   return prisma.user.findUnique({
     where: {
