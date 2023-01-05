@@ -30,7 +30,7 @@ export class BookmarkController {
 
   @Get()
   getBookmarks(@GetUser() user: AuthResponseDto) {
-    return this.bookmarkService.getBookmarks(user.id);
+    return this.bookmarkService.getBookmarks(user.id, user.isLive);
   }
 
   @Get(':id')
@@ -38,7 +38,11 @@ export class BookmarkController {
     @GetUser() user: AuthResponseDto,
     @Param('id', ParseIntPipe) bookmarkId: number,
   ) {
-    return this.bookmarkService.getBookmarksId(user.id, bookmarkId);
+    return this.bookmarkService.getBookmarksId(
+      user.id,
+      user.isLive,
+      bookmarkId,
+    );
   }
 
   @Patch(':id')

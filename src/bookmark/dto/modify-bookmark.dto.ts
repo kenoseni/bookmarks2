@@ -1,4 +1,4 @@
-import { IsOptional, IsString } from 'class-validator';
+import { IsOptional, IsString, IsBoolean } from 'class-validator';
 
 export class ModifyBookmarkDto {
   @IsString()
@@ -12,4 +12,8 @@ export class ModifyBookmarkDto {
   @IsString()
   @IsOptional()
   link?: string;
+
+  @IsBoolean()
+  @IsOptional()
+  isLive?: boolean;
 }

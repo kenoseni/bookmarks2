@@ -21,4 +21,7 @@ export class AuthResponseDto {
 
   @Expose()
   token?: string;
+
+  @Expose()
+  isLive?: boolean;
 }

@@ -7,7 +7,7 @@ import {
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { Request } from 'express';
-import { PrismaClient } from '@prisma/client';
+import { PrismaService } from 'src/prisma/prisma.service';
 
 export const GetUser = createParamDecorator(
   async (data: unknown, context: ExecutionContext) => {
@@ -21,7 +21,7 @@ export const GetUser = createParamDecorator(
 const verifyToken = async (req: Request) => {
   const jwt = new JwtService();
   const config = new ConfigService();
-  const prisma = new PrismaClient();
+  const prisma = new PrismaService(config);
   const secret: string = config.get('JWT_SECRET');
 
   const { authorization } = req.headers;
@@ -41,7 +41,7 @@ const verifyToken = async (req: Request) => {
     userId: number;
     iat: number;
     exp: number;
-  } = await jwt.verifyAsync(token, { secret }).catch((error) => {
+  } = await jwt.verifyAsync(token, { secret }).catch(() => {
     throw new NotFoundException('User not found');
   });
 

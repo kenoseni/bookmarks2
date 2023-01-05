@@ -1,14 +1,15 @@
 import { ForbiddenException, Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
-import { PrismaClient } from '@prisma/client';
+import { PrismaService } from 'src/prisma/prisma.service';
+// import { PrismaClient } from '@prisma/client';
 import { AuthDto } from './dto';
 import * as argon from 'argon2';
 
 @Injectable()
 export class AuthService {
   constructor(
-    private prisma: PrismaClient,
+    private prisma: PrismaService,
     private jwt: JwtService,
     private config: ConfigService,
   ) {}
@@ -19,6 +20,7 @@ export class AuthService {
       data: {
         email: authDto.email,
         hash_password,
+        isLive: authDto?.isLive,
       },
     });
     return user;
